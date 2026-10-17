@@ -508,6 +508,12 @@ pnpm release
 
 [MIT](./LICENSE)
 
+## 致谢
+
+本项目的部分代码派生自 [Taro](https://github.com/NervJS/taro) 的 [`@tarojs/plugin-mini-ci`](https://github.com/NervJS/taro/tree/main/packages/taro-plugin-mini-ci) 包，在此向 Taro 团队及所有贡献者致谢。
+
+该项目同样以 MIT 协议开源，版权归 O2Team 所有，版权声明已保留在 [LICENSE](./LICENSE) 中。
+
 ## 🙇🏻‍♂️[赞助](https://afdian.com/a/flippedround)
 
 <p align="center">
