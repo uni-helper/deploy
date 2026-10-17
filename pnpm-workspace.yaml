@@ -1,0 +1,64 @@
+# trustPolicy 属于较新版本 pnpm 的供应链校验开关，仓库内统一关掉，
+# 避免不同 pnpm 版本（本地 12 / CI 10）行为不一致。
+trustPolicy: off
+
+# 本项目把 6 个平台官方 CI 包声明为「可选的 peerDependencies」，由使用者按需安装。
+#
+# pnpm 与 npm 在这里的关键差异：pnpm 默认开启 autoInstallPeers，会把「根项目自己的」
+# peerDependencies 当作真实依赖装进 node_modules（npm 不会）。于是仅仅执行 pnpm install，
+# 就会连带装上体积巨大的 swan-toolkit / miniprogram-ci / minidev 等包，
+# 并且触发 swan-toolkit 的 postinstall 去百度 CDN（spcbj.cdn.bcebos.com）下载二进制资源，
+# 网络受限时整个安装会以 ERR_PNPM_EXECUTOR_LIFECYCLE_SCRIPT_FAILED 中断。
+#
+# 关掉自动安装 peer，保持与 npm 一致的语义：默认安装保持精简，
+# 需要哪个平台时再按 README 显式安装对应依赖。
+# 注意：该选项只影响本仓库的开发安装，不会影响使用者安装本包（pnpm 不会自动安装
+# 传递依赖的可选 peer）。
+autoInstallPeers: false
+
+# 允许依赖执行安装脚本，用于按需安装平台依赖时（如 swan-toolkit、minidev 的 postinstall），
+# 同时保证 simple-git-hooks 的 postinstall 能装好 git hooks。
+# 默认安装已无任何需要构建的包，此项目前不参与实际构建。
+dangerouslyAllowAllBuilds: true
+shellEmulator: true
+
+# 当前仓库只有根包，这里沿用 uni-helper 其它仓库的目录布局约定，
+# 便于后续直接新增 playground / examples 等子包。
+packages:
+  - playground
+  - docs
+  - packages/*
+  - examples/*
+
+# 依赖版本统一收敛到这里，package.json 只写 `catalog:` 引用，
+# 避免同一个包在多处出现版本漂移；与 uni-helper 其它仓库保持一致。
+catalog:
+  cac: ^7.1.0
+  consola: ^3.4.2
+  dotenv: ^17.4.2
+  dotenv-expand: ^13.0.0
+  jimp: ^1.6.1
+  jsqr: ^1.4.0
+  qrcode: ^1.5.4
+  strip-json-comments: ^5.0.3
+  unconfig: ^7.5.0
+
+catalogs:
+  # 构建与代码质量
+  cli:
+    '@antfu/eslint-config': ^9.5.1
+    bumpp: ^12.3.0
+    eslint: ^10.12.0
+    lint-staged: ^17.6.0
+    publint: ^0.3.25
+    simple-git-hooks: ^2.14.0
+    tsdown: ^0.23.1
+    typescript: ^5.9.3
+  # 测试
+  testing:
+    vitest: ^3.2.6
+    vitest-package-exports: ^1.2.0
+  # 类型声明
+  types:
+    '@types/node': ^24.19.2
+    '@types/qrcode': ^1.5.6

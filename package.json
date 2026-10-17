@@ -1,0 +1,123 @@
+{
+  "name": "@uni-helper/deploy",
+  "type": "module",
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.34.1",
+  "description": "uni-app 小程序构建产物自动化部署工具，支持 CLI 与 SDK 两种调用方式",
+  "author": "FliPPeDround <flippedround@qq.com>",
+  "license": "MIT",
+  "funding": "https://afdian.com/a/flippedround",
+  "homepage": "https://github.com/uni-helper/deploy#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uni-helper/deploy.git"
+  },
+  "bugs": "https://github.com/uni-helper/deploy/issues",
+  "keywords": [
+    "uni",
+    "uni-app",
+    "uni-helper",
+    "miniapp",
+    "mini-program",
+    "ci",
+    "cd",
+    "deploy",
+    "cli"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "bin": {
+    "uni-deploy": "./dist/cli.mjs",
+    "und": "./dist/cli.mjs"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch ./src",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint --cache .",
+    "lint:fix": "eslint --fix",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "prepare": "simple-git-hooks",
+    "release": "bumpp",
+    "prepublishOnly": "pnpm build"
+  },
+  "peerDependencies": {
+    "dingtalk-miniapp-opensdk": "^1.0.8",
+    "jd-miniprogram-ci": "^1.0.8",
+    "minidev": "^2.2.5",
+    "miniprogram-ci": "^2.1.31",
+    "swan-toolkit": ">=3.0.0",
+    "tt-ide-cli": "^0.1.33"
+  },
+  "peerDependenciesMeta": {
+    "dingtalk-miniapp-opensdk": {
+      "optional": true
+    },
+    "jd-miniprogram-ci": {
+      "optional": true
+    },
+    "minidev": {
+      "optional": true
+    },
+    "miniprogram-ci": {
+      "optional": true
+    },
+    "swan-toolkit": {
+      "optional": true
+    },
+    "tt-ide-cli": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "cac": "catalog:",
+    "consola": "catalog:",
+    "dotenv": "catalog:",
+    "dotenv-expand": "catalog:",
+    "jimp": "catalog:",
+    "jsqr": "catalog:",
+    "qrcode": "catalog:",
+    "strip-json-comments": "catalog:",
+    "unconfig": "catalog:"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "catalog:cli",
+    "@types/node": "catalog:types",
+    "@types/qrcode": "catalog:types",
+    "bumpp": "catalog:cli",
+    "eslint": "catalog:cli",
+    "lint-staged": "catalog:cli",
+    "publint": "catalog:cli",
+    "simple-git-hooks": "catalog:cli",
+    "tsdown": "catalog:cli",
+    "typescript": "catalog:cli",
+    "vitest": "catalog:testing",
+    "vitest-package-exports": "catalog:testing"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm i --frozen-lockfile --ignore-scripts --offline && npx lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
+  }
+}

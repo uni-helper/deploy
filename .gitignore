@@ -1,0 +1,16 @@
+node_modules
+dist
+coverage
+*.log
+*.tgz
+.DS_Store
+.env
+.env.local
+.env.*.local
+.idea
+# 保留 .vscode/settings.json 与 extensions.json，只忽略个人配置
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.eslintcache
+temp
